@@ -1,5 +1,5 @@
 import express from "express";
-import { UserModel } from "./db.js";
+import { User } from "./db.js";
 import dotenv from "dotenv";
 
 dotenv.config();
