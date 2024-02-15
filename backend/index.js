@@ -1,6 +1,10 @@
 import express from "express";
+import { UserModel } from "./db.js";
+import dotenv from "dotenv";
 
-const port = 3000;
+dotenv.config();
+
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.get("/", (req, res) => {
