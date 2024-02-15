@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -41,6 +42,21 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+//Always Remember to define it before model
+UserSchema.pre("save", async function (next) {
+  const user = this;
+  if (!user.isModified("password")) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(user.password, salt);
+    user.password = hash;
+
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
 const User = mongoose.model("User", UserSchema);
 
-export { User };
+export { User, UserSchema };
