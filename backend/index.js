@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.route.js";
 import cors from "cors";
 import signupRouter from "./routes/auth.route.js";
+import signinRouter from "./routes/signin.route.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use("/api/v1", userRouter);
 app.use("/api/v1/signup", signupRouter);
+app.use("/api/v1/signin", signinRouter);
 
 // //Middleware to handle Error
 // app.use((err, res, req, next) => {

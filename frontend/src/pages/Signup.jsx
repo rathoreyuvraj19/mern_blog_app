@@ -27,7 +27,7 @@ export default function Signup() {
       const token = response.data.token;
       localStorage.setItem("token", `Bearer ${token}`);
       console.log(token);
-      navigate("/signin");
+      navigate("/dashboard");
     } catch (error) {
       // console.log(error.response);
       console.log(error.response.data.message);
