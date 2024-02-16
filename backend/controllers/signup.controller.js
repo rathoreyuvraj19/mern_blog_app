@@ -48,7 +48,9 @@ export const signup = async (req, res) => {
     }
   } else {
     const errors = validate.error.flatten();
-    console.log(errors);
-    return res.status(404).json({ message: errors });
+    // console.log(errors.fieldErrors);
+    return res
+      .status(404)
+      .json({ message: JSON.stringify(errors.fieldErrors) });
   }
 };
