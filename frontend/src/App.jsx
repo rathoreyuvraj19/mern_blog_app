@@ -20,6 +20,7 @@ export default function App() {
         <Route path="/signin" element={<Signin></Signin>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
         <Route path="/projects" element={<Projects></Projects>}></Route>
+        <Route path="/home" element={<Home></Home>}></Route>
       </Routes>
       <FooterComponent></FooterComponent>
     </BrowserRouter>

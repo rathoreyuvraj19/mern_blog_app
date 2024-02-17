@@ -34,6 +34,12 @@ export const signin = async (req, res) => {
         return res.status(200).json({
           message: "Signin Successfull",
           token: token,
+          user: {
+            username: user.username,
+            email: user.email,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+          },
         });
       } else {
         return res.status(401).json({

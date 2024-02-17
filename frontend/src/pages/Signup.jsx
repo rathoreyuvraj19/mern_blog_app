@@ -2,13 +2,21 @@ import { Label, TextInput, Button, Alert, Spinner } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../app/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const backendUrl = "http://localhost:3000/api/v1/signup";
 
 export default function Signup() {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -20,19 +28,22 @@ export default function Signup() {
   async function handleSubmit(e) {
     e.preventDefault();
     const body = formData;
-    setLoading(true);
+
     try {
+      // setLoading(true);
+      // setErrorMessage(null);
+      dispatch(signInStart());
       const response = await axios.post(backendUrl, formData);
-      setErrorMessage(null);
-      const token = response.data.token;
+      const { token, ...rest } = response.data;
       localStorage.setItem("token", `Bearer ${token}`);
-      console.log(token);
-      navigate("/dashboard");
+      dispatch(signInSuccess(rest));
+      navigate("/home");
     } catch (error) {
       // console.log(error.response);
       console.log(error.response.data.message);
-      setErrorMessage(error.response.data.message);
-      setLoading(false);
+      // setErrorMessage(error.response.data.message);
+      // setLoading(false);
+      dispatch(signInFailure(error.response.data.message));
     }
   }
 
