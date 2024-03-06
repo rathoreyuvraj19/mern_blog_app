@@ -13,7 +13,7 @@ export default function FooterComponent() {
   const date = new Date();
   return (
     <Footer bgDark>
-      <div className="w-full">
+      <div className="w-full pt-2">
         <div className="mt-4 ml-4">
           <Link
             to={"/"}
