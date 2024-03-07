@@ -2,13 +2,18 @@ import { Label, TextInput, Button, Alert, Spinner } from "flowbite-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { loadingState, currentUserState, errorState } from "../atoms/atoms.js";
 
 const backendUrl = "http://localhost:3000/api/v1/signin";
 
 export default function Signin() {
+  const [loading, setLoading] = useRecoilState(loadingState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [errorMessage, setErrorMessage] = useRecoilState(errorState);
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -28,12 +33,15 @@ export default function Signin() {
       const token = response.data.token;
       localStorage.setItem("token", `Bearer ${token}`);
       console.log(token);
+      setCurrentUser("Singh");
       navigate("/dashboard");
     } catch (error) {
       // console.log(error.response);
       console.log(error.response.data.message);
       setErrorMessage(error.response.data.message);
       setLoading(false);
+    } finally {
+      setLoading(false); // Set loading back to false regardless of success or error
     }
   }
 
