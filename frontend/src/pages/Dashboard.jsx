@@ -12,9 +12,8 @@ export default function Dashboard() {
         onClick={() => {
           console.log(currentUser);
         }}
-      >
-        Dashboard
-      </button>
+      ></button>
+      hi {currentUser.username}
     </div>
   );
 }

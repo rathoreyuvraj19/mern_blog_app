@@ -1,5 +1,5 @@
 import { Label, TextInput, Button, Alert, Spinner } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState } from "recoil";
@@ -12,15 +12,12 @@ export default function Signin() {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [errorMessage, setErrorMessage] = useRecoilState(errorState);
   const [formData, setFormData] = useState({});
-  // const [errorMessage, setErrorMessage] = useState(null);
-  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleChange(e) {
     setFormData((prevVal) => {
       return { ...prevVal, [e.target.id]: e.target.value.trim() };
     });
-    // console.log(formData);
   }
 
   async function handleSubmit(e) {
@@ -32,8 +29,7 @@ export default function Signin() {
       setErrorMessage(null);
       const token = response.data.token;
       localStorage.setItem("token", `Bearer ${token}`);
-      console.log(token);
-      setCurrentUser("Singh");
+      await setCurrentUser(response.data.user);
       navigate("/dashboard");
     } catch (error) {
       // console.log(error.response);

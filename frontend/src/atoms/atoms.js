@@ -1,5 +1,8 @@
 // atoms.js
-import { atom } from "recoil";
+import { atom, useRecoilCallback } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export const loadingState = atom({
   key: "loadingState",
@@ -9,6 +12,7 @@ export const loadingState = atom({
 export const currentUserState = atom({
   key: "currentUserState",
   default: null,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const errorState = atom({
